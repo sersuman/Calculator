@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText etValues;
     private int firstInt, secondInt, result;
     private TextView tvProcess;
+    private String operator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             btnCalculate.setOnClickListener(this);
             btnSum.setOnClickListener(this);
+            btnMinus.setOnClickListener(this);
+            btnMultiply.setOnClickListener(this);
+            btnDivide.setOnClickListener(this);
             btnEdit.setOnClickListener(this);
 
         }
@@ -56,15 +60,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tvProcess.setText("");
         }
         if (v.getId() == R.id.btnSum){
+            operator = "+";
             firstInt = Integer.parseInt(etValues.getText().toString());
             tvProcess.setText(Integer.toString(firstInt)+"+");
             etValues.setText("");
+        }else if (v.getId() == R.id.btnMinus){
+            operator = "-";
+            firstInt = Integer.parseInt(etValues.getText().toString());
+            tvProcess.setText(Integer.toString(firstInt)+"-");
+            etValues.setText("");
+        }if (v.getId() == R.id.btnMultiply){
+            operator = "*";
+            firstInt = Integer.parseInt(etValues.getText().toString());
+            tvProcess.setText(Integer.toString(firstInt)+"*");
+            etValues.setText("");
+        }if (v.getId() == R.id.btnDivide){
+            operator = "/";
+            firstInt = Integer.parseInt(etValues.getText().toString());
+            tvProcess.setText(Integer.toString(firstInt)+"/");
+            etValues.setText("");
         }else if (v.getId() == R.id.btnCalculate){
             secondInt = Integer.parseInt(etValues.getText().toString());
-            result = firstInt + secondInt;
+            int result = calculate(secondInt,operator);
+//            result = firstInt + secondInt;
             tvProcess.append(Integer.toString(secondInt));
-            etValues.setText(Integer.toString(result));
+            etValues.setText(String.format("%d",result));
         }
 
     }
+
+    public int calculate(int secondInt, String operator) {
+        if (operator.equals("+")){
+             result = firstInt + secondInt;
+        }else if (operator.equals("-")){
+            result = firstInt - secondInt;
+        }else if (operator.equals("*")){
+            result = firstInt * secondInt;
+        }else if (operator.equals("/")){
+            result = firstInt / secondInt;
+        }
+        return result;
+    }
+
 }
